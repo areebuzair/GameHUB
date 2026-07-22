@@ -56,15 +56,15 @@ for folder in folders:
     lastmod.appendChild(root.createTextNode(iso_format_string))
     
     url.appendChild(loc)
-    url.appendChild(priority)
     url.appendChild(lastmod)
+    url.appendChild(priority)
 
     xml.appendChild(url)
 
 
 xml_str = root.toprettyxml(indent ="\t") 
 
-save_path_file = "mysites.xml"
+save_path_file = "sitemap.xml"
 
 with open(save_path_file, "w", encoding='utf-8') as f:
     f.write(xml_str) 
