@@ -64,7 +64,7 @@ for folder in folders:
 
 xml_str = root.toprettyxml(indent ="\t") 
 
-save_path_file = "sitemap.xml"
+save_path_file = "gamehubsitemap.xml"
 
 with open(save_path_file, "w", encoding='utf-8') as f:
     f.write(xml_str) 
