@@ -2,14 +2,15 @@ import os
 import json
 from xml.dom import minidom
 from urllib.parse import quote
-from datetime import date
+from datetime import datetime, timezone
 
-# Get current local date and time as a datetime object
-iso_format_string = date.today().isoformat()
+# Get the current time in UTC
+current_datetime_utc = datetime.now(timezone.utc)
+
+# Format to ISO 8601 string without microseconds
+iso_format_string = current_datetime_utc.isoformat(timespec='seconds')
 
 print(iso_format_string)
-
-
 
 # Specify the directory you want to search for folders in
 directory_path = './WebCodes'
@@ -41,6 +42,22 @@ xml.setAttribute('xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
 xml.setAttribute('xsi:schemaLocation', "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd")
 root.appendChild(xml)
 
+url = root.createElement('url')
+
+loc = root.createElement('loc')
+lastmod = root.createElement('lastmod')
+priority = root.createElement('priority')
+
+loc.appendChild(root.createTextNode(f"https://areebuzair.github.io/GameHUB/"))
+priority.appendChild(root.createTextNode(f"1.0"))
+lastmod.appendChild(root.createTextNode(iso_format_string))
+
+url.appendChild(loc)
+url.appendChild(lastmod)
+url.appendChild(priority)
+
+xml.appendChild(url)
+
 for folder in folders:
     url = root.createElement('url')
 
@@ -49,7 +66,7 @@ for folder in folders:
     priority = root.createElement('priority')
 
     loc.appendChild(root.createTextNode(f"https://areebuzair.github.io/GameHUB/WebCodes/{quote(folder['folder_name'])}/"))
-    priority.appendChild(root.createTextNode(f"1.0"))
+    priority.appendChild(root.createTextNode(f"0.8"))
     lastmod.appendChild(root.createTextNode(iso_format_string))
     
     url.appendChild(loc)
