@@ -2,13 +2,10 @@ import os
 import json
 from xml.dom import minidom
 from urllib.parse import quote
-from datetime import datetime
+from datetime import date
 
 # Get current local date and time as a datetime object
-current_datetime_local = datetime.now()
-
-# Convert to an ISO 8601 formatted string
-iso_format_string = current_datetime_local.isoformat()
+iso_format_string = date.today().isoformat()
 
 print(iso_format_string)
 
@@ -52,7 +49,7 @@ for folder in folders:
     priority = root.createElement('priority')
 
     loc.appendChild(root.createTextNode(f"https://areebuzair.github.io/GameHUB/WebCodes/{quote(folder['folder_name'])}/"))
-    priority.appendChild(root.createTextNode(f"1"))
+    priority.appendChild(root.createTextNode(f"1.0"))
     lastmod.appendChild(root.createTextNode(iso_format_string))
     
     url.appendChild(loc)
@@ -64,7 +61,7 @@ for folder in folders:
 
 xml_str = root.toprettyxml(indent ="\t") 
 
-save_path_file = "gamehubsitemap.xml"
+save_path_file = "sitemap.xml"
 
 with open(save_path_file, "w", encoding='utf-8') as f:
     f.write(xml_str) 
